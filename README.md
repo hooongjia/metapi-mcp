@@ -5,7 +5,7 @@
 ## 特性
 
 - **独立项目** — 不修改 Metapi 源码，通过 HTTP 调用 Metapi REST API
-- **23 个 MCP Tools** — 涵盖查询（仪表盘、模型、日志、路由等）和操作（签到、刷新余额、重建路由等）
+- **46 个 MCP Tools** — 覆盖站点管理、账号管理、下游密钥管理、路由管理、使用日志、统计分析等完整管理能力
 - **双传输模式** — 支持 stdio（本地使用）和 Streamable HTTP（远程部署）
 - **TypeScript** — 端到端类型安全，基于 `@modelcontextprotocol/sdk` 1.27.x
 
@@ -91,38 +91,86 @@ node dist/index.js
 
 ## Tool 概览
 
-### 查询类
+### 站点管理
+
+| Tool | 说明 |
+|------|------|
+| `list_sites` | 获取所有上游站点列表 |
+| `create_site` | 创建上游站点 |
+| `update_site` | 更新站点配置 |
+| `delete_site` | 删除站点 |
+| `toggle_site` | 启用/禁用站点 |
+| `detect_site_platform` | 探测 URL 对应的平台类型 |
+| `get_site_disabled_models` | 获取站点禁用模型列表 |
+| `update_site_disabled_models` | 更新站点禁用模型 |
+
+### 账号/连接管理
+
+| Tool | 说明 |
+|------|------|
+| `list_accounts` | 获取所有账号列表（含站点、余额、状态） |
+| `create_account` | 手动添加账号（Token 方式） |
+| `login_account` | 通过用户名密码登录创建账号 |
+| `update_account` | 更新账号配置 |
+| `delete_account` | 删除账号 |
+| `toggle_account` | 启用/禁用账号 |
+| `get_account_models` | 获取账号可用模型列表 |
+| `refresh_account_balance` | 刷新账号余额 |
+| `refresh_account_models` | 刷新账号模型列表 |
+| `refresh_account_health` | 刷新账号健康状态 |
+
+### 下游密钥管理
+
+| Tool | 说明 |
+|------|------|
+| `list_downstream_keys` | 列出所有下游 API Key |
+| `get_downstream_key_summary` | 下游 Key 摘要（含用量统计） |
+| `get_downstream_key_overview` | 单个 Key 详情和用量概览 |
+| `get_downstream_key_trend` | 单个 Key 用量趋势 |
+| `create_downstream_key` | 创建下游 API Key |
+| `update_downstream_key` | 更新下游 Key 配置 |
+| `delete_downstream_key` | 删除下游 Key |
+| `reset_downstream_key_usage` | 重置 Key 已用量 |
+
+### 路由管理
+
+| Tool | 说明 |
+|------|------|
+| `list_routes` | 获取路由规则列表 |
+| `get_route_channels` | 获取路由通道详情 |
+| `explain_route_decision` | 解释模型路由决策过程 |
+| `rebuild_routes` | 重建路由表 |
+
+### 模型与市场
 
 | Tool | 说明 |
 |------|------|
 | `list_models` | 获取所有可用模型列表 |
+| `get_models_marketplace` | 模型广场（跨站覆盖率、定价对比） |
+| `refresh_models_marketplace` | 刷新模型广场数据 |
+| `search` | 全局搜索（站点、账号、Token、模型、日志） |
+
+### 使用日志与统计
+
+| Tool | 说明 |
+|------|------|
 | `get_dashboard` | 仪表盘数据（余额、消费、签到、代理统计） |
 | `get_proxy_logs` | 代理请求日志（支持按状态/模型/站点/时间筛选） |
 | `get_proxy_log_detail` | 单条日志详情（含计费明细） |
-| `get_models_marketplace` | 模型广场（跨站覆盖率、定价对比） |
-| `search` | 全局搜索（站点、账号、Token、模型、日志） |
-| `explain_route_decision` | 路由决策解释（匹配路由、候选通道、概率分配） |
-| `list_routes` | 路由规则列表 |
-| `get_route_channels` | 指定路由的通道详情 |
-| `list_accounts` | 账号列表（关联站点、余额、状态） |
-| `list_sites` | 上游站点列表 |
-| `get_checkin_logs` | 签到日志 |
-| `get_events` | 系统事件列表 |
-| `get_unread_event_count` | 未读事件数量 |
+| `get_site_distribution` | 各站点余额分布、消费和账号数统计 |
+| `get_site_trend` | 按站点维度的消费与调用趋势 |
+| `get_model_by_site` | 按模型聚合的调用次数、消费、Token 用量 |
 
-### 操作类
+### 签到与事件
 
 | Tool | 说明 |
 |------|------|
 | `trigger_checkin` | 触发全部账号签到 |
 | `trigger_account_checkin` | 触发指定账号签到 |
-| `refresh_account_balance` | 刷新指定账号余额 |
-| `refresh_account_models` | 刷新指定账号模型列表 |
-| `refresh_models_marketplace` | 刷新模型广场数据 |
-| `rebuild_routes` | 重建路由表 |
+| `get_checkin_logs` | 获取签到日志 |
+| `get_events` | 获取系统事件列表 |
+| `get_unread_event_count` | 获取未读事件数量 |
 | `mark_events_read` | 标记所有事件已读 |
-| `toggle_account` | 启用/禁用指定账号 |
-| `toggle_site` | 启用/禁用指定站点 |
 
 ## License
 
